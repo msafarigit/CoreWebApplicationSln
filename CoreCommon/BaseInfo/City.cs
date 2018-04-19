@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreCommon
+namespace CoreCommon.BaseInfo
 {
-    public class Class1
+    public class City : Entity
     {
+        public string Name { get; set; }
     }
 }

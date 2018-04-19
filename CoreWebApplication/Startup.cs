@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -28,7 +29,7 @@ namespace CoreWebApplication
                                                       .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true)
                                                       .AddJsonFile($"appSettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                                                       .AddEnvironmentVariables()//You can save ConnectionString in system variables and read from it or save it in project propertis in debug section enviroment variables
-                                                      .Build(); 
+                                                      .Build();
         }
 
 
@@ -38,7 +39,17 @@ namespace CoreWebApplication
         //Called by the web host before the Configure method to configure the app's services.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Transient: Transient lifetime services are created "each time they are requested".This lifetime works best for lightweight, stateless services.
+            //The AddTransient method is used to map abstract types to concrete services that are "instantiated separately for every object that requires it".
+            //This is known as the service's lifetime
+            //Scoped: Scoped lifetime services "are created once per request".
+            //Singleton: Singleton lifetime services "are created the first time they are requested"(or when ConfigureServices is run if
+            //you specify an instance there) and then every subsequent request will use the same instance.
+
             services.AddSingleton(Configuration);//Injected to the Constructor in any class
+
+            services.AddDbContext<CoreContext>();//Injected to the Constructor in any class
+            //services.AddScoped<IWorldRepository, WorldRepository>();
 
             // Add framework services.
             services.AddMvc()
@@ -55,13 +66,6 @@ namespace CoreWebApplication
                             casted.NamingStrategy = null; //Same as Class Property Name instead of camelCase Property Name
                         }
                     });
-
-            //Transient: Transient lifetime services are created "each time they are requested".This lifetime works best for lightweight, stateless services.
-            //The AddTransient method is used to map abstract types to concrete services that are "instantiated separately for every object that requires it".
-            //This is known as the service's lifetime
-            //Scoped: Scoped lifetime services "are created once per request".
-            //Singleton: Singleton lifetime services "are created the first time they are requested"(or when ConfigureServices is run if
-            //you specify an instance there) and then every subsequent request will use the same instance.
 
             services.AddLogging();
         }
