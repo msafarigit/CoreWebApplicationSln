@@ -14,11 +14,11 @@ namespace CoreAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<Entity> builder)
         {
-            builder.HasKey(entity => entity.Id);
+            builder.HasKey(entity => entity.ID);
             //ValueGeneratedNever = [DatabaseGenerated(DatabaseGeneratedOption.None)]
             //ValueGeneratedOnAdd = [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             //ValueGeneratedOnAddOrUpdate = [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-            builder.Property(entity => entity.Id).UseSqlServerIdentityColumn().HasColumnName("ID").ValueGeneratedOnAdd().HasColumnType("int").IsRequired();
+            builder.Property(entity => entity.ID).UseSqlServerIdentityColumn().HasColumnName("ID").ValueGeneratedOnAdd().HasColumnType("int").IsRequired();
         }
     }
 }

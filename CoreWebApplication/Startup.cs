@@ -73,8 +73,10 @@ namespace CoreWebApplication
 
 
         //Must include a Configure method to create the app's request processing pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, CoreContext dbContext)
         {
+
+
             //How to pipeline works
             //app.Use(async (context, next) =>
             //{
