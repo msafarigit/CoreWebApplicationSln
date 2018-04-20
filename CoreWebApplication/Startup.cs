@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreAccess;
+using CoreAccess.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -75,7 +76,7 @@ namespace CoreWebApplication
         //Must include a Configure method to create the app's request processing pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, CoreContext dbContext)
         {
-
+            ApplicationDbContext.EntityContext = () => dbContext;
 
             //How to pipeline works
             //app.Use(async (context, next) =>

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreAccess
+namespace CoreAccess.EntityFramework
 {
     public interface IUnitOfWork : IDisposable
     {
-        IEntityContext EntityContext { get; }
+        IEntityContextAsync EntityContext { get; }
         IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity;
         int SaveChanges();
         void Dispose(bool disposing);

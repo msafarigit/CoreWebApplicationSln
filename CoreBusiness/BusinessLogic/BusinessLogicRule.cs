@@ -1,4 +1,5 @@
 ﻿using CoreAccess;
+using CoreAccess.EntityFramework;
 using CoreCommon;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreBusiness
+namespace CoreBusiness.BusinessLogic
 {
     public class BusinessLogicRule<TEntity> : IBusinessLogicRule<TEntity>
         where TEntity : class, IEntity, new()

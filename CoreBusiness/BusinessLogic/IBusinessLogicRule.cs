@@ -1,22 +1,20 @@
-﻿using CoreCommon;
+﻿using CoreAccess;
+using CoreAccess.EntityFramework;
+using CoreCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreAccess
+namespace CoreBusiness.BusinessLogic
 {
-    public interface IRepository<TEntity> where TEntity : class, IEntity
+    public interface IBusinessLogicRule<TEntity> where TEntity : class, IEntity
     {
-        int Count();
-        IQueryable<TEntity> GetAll();
-        TEntity FindEntity(params object[] values);
-        ICollection<TEntity> FindAll(Expression<Func<TEntity, bool>> match);
-        IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
+        IUnitOfWork UnitOfWork { get; set; }
         object Insert(TEntity entity);
         object Insert(IEnumerable<TEntity> entity);
+        TEntity FindEntity(params object[] values);
         void Update(TEntity entity);
         void Delete(object identifier);
         void Delete(TEntity entity);

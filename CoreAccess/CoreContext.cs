@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CoreAccess.Configuration;
+using CoreAccess.EntityFramework;
 using CoreCommon.BaseInfo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;

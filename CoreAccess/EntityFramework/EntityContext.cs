@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace CoreAccess
+namespace CoreAccess.EntityFramework
 {
-    public class EntityContext : DbContext, IEntityContext, IDisposable
+    public class EntityContext : DbContext, IEntityContextAsync, IEntityContext, IDisposable
     {
         private bool _disposed;
 
@@ -38,6 +39,21 @@ namespace CoreAccess
             return base.SaveChanges();
         }
 
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+        {
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
         public override void Dispose()
         {
             if (!this._disposed)
@@ -51,5 +67,6 @@ namespace CoreAccess
             }
             base.Dispose();
         }
+
     }
 }

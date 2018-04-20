@@ -1,4 +1,5 @@
 ﻿using CoreBusiness;
+using CoreBusiness.BusinessLogic;
 using CoreCommon;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,5 +21,10 @@ namespace CoreWeb
         }
 
         protected abstract IBusinessLogicRule<TModel> DefineBusinessLogicRule();
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
     }
 }

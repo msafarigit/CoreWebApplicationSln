@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreAccess
+namespace CoreAccess.EntityFramework
 {
     public interface IEntityContext : IDisposable
     {
         int SaveChanges();
+        int SaveChanges(bool acceptAllChangesOnSuccess);
     }
 }

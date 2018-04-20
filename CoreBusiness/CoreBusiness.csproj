@@ -193,8 +193,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogicRule.cs" />
-    <Compile Include="IBusinessLogicRule.cs" />
+    <Compile Include="BusinessLogic\BusinessLogicRule.cs" />
+    <Compile Include="BusinessLogic\IBusinessLogicRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
