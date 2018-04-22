@@ -42,15 +42,16 @@ namespace CoreAccess.EntityFramework
             {
                 this._repositories = new Dictionary<string, object>();
             }
+
             string entityName = typeof(TEntity).Name;
             if (!_repositories.ContainsKey(entityName))
             {
                 Type repositoryType = typeof(Repository<>);
-                Type[] typeArguments = new Type[] { typeof(TEntity) };
-                object[] args = new object[] { this };
-                this._repositories.Add(entityName, Activator.CreateInstance(repositoryType.MakeGenericType(typeArguments), args));
+                //Type[] typeArguments = new Type[] { typeof(TEntity) };
+                //object[] args = new object[] { this };
+                this._repositories.Add(entityName, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), this));
             }
-            return (Repository<TEntity>)_repositories[entityName];
+            return (IRepositoryAsync<TEntity>)_repositories[entityName];
         }
 
         public int SaveChanges()
