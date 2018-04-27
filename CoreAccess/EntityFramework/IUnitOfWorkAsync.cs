@@ -10,7 +10,7 @@ namespace CoreAccess.EntityFramework
 {
     public interface IUnitOfWorkAsync : IUnitOfWork, IDisposable
     {
-        IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IEntity;
+        IRepositoryAsync<TEntity> GetRepositoryAsync<TEntity>() where TEntity : class, IEntity;
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
     }

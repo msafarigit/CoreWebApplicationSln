@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,9 +15,15 @@ namespace CoreAccess.EntityFramework
     public class EntityContext : DbContext, IEntityContextAsync, IEntityContext, IDisposable
     {
         private bool _disposed;
+        private IConfigurationRoot _config;
 
         public EntityContext(DbContextOptions options) : base(options)
         {
+        }
+
+        public EntityContext(IConfigurationRoot config, DbContextOptions options) : base(options)
+        {
+            _config = config;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

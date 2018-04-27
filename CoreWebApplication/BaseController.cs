@@ -15,12 +15,12 @@ namespace CoreWeb
     {
         private IBusinessLogicRule<TModel> businessRule;
 
-        public BaseController()
+        public BaseController()//same as Template Method
         {
             businessRule = DefineBusinessLogicRule();
         }
 
-        protected abstract IBusinessLogicRule<TModel> DefineBusinessLogicRule();
+        protected abstract IBusinessLogicRule<TModel> DefineBusinessLogicRule(); //Factory method to create Bridge
 
         protected override void Dispose(bool disposing)
         {

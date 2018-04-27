@@ -10,7 +10,7 @@ namespace CoreAccess.EntityFramework
     public interface IUnitOfWork : IDisposable
     {
         IEntityContextAsync EntityContext { get; }
-        IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity;
+        IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity;
         int SaveChanges();
         void Dispose(bool disposing);
     }

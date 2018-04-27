@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CoreAccess.EntityFramework
 {
+    //class Repository<TEntity> is Bridge for UnitOfWork Abstraction
     public class Repository<TEntity> : IRepositoryAsync<TEntity>, IRepository<TEntity> where TEntity : class, IEntity
     {
         public int Count()

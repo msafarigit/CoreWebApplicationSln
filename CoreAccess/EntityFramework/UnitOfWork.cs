@@ -1,5 +1,6 @@
 ﻿using CoreCommon;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace CoreAccess.EntityFramework
     {
         private IEntityContextAsync _entityContext;
         private DbTransaction _transaction;
-        private Dictionary<string, object> _repositories;
+        private ConcurrentDictionary<string, object> _repositoryCache;//Flyweight pattern
         private bool _disposed;
 
         public IEntityContextAsync EntityContext
@@ -31,27 +32,32 @@ namespace CoreAccess.EntityFramework
             this._entityContext = entityContext;
         }
 
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : class, IEntity
+        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity
         {
-            return this.RepositoryAsync<TEntity>();
+            return this.GetRepositoryAsync<TEntity>();
         }
 
-        public IRepositoryAsync<TEntity> RepositoryAsync<TEntity>() where TEntity : class, IEntity
+        //Flyweight Factory Method: It is quite common to have flyweight objects to be immutable objects so that they automatically share the same memory space.
+        //You use it when you typically have the same information segment in a large number of
+        //objects and you decide to share this information between all of these large number of
+        //objects instead of having the same copy of information contained inside all of them.
+        public IRepositoryAsync<TEntity> GetRepositoryAsync<TEntity>() where TEntity : class, IEntity
         {
-            if (this._repositories == null)
+            if (this._repositoryCache == null)
             {
-                this._repositories = new Dictionary<string, object>();
+                this._repositoryCache = new ConcurrentDictionary<string, object>();
             }
 
             string entityName = typeof(TEntity).Name;
-            if (!_repositories.ContainsKey(entityName))
-            {
-                Type repositoryType = typeof(Repository<>);
-                //Type[] typeArguments = new Type[] { typeof(TEntity) };
-                //object[] args = new object[] { this };
-                this._repositories.Add(entityName, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), this));
-            }
-            return (IRepositoryAsync<TEntity>)_repositories[entityName];
+            object repository;
+            if (!_repositoryCache.TryGetValue(entityName, out repository))
+                return (IRepositoryAsync<TEntity>)repository;
+
+            Type repositoryType = typeof(Repository<>);
+            //Type[] typeArguments = new Type[] { typeof(TEntity) };
+            object[] args = new object[] { this };
+            this._repositoryCache.AddOrUpdate(entityName, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), args), (key, oldRepository) => Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), args));
+            return (IRepositoryAsync<TEntity>)_repositoryCache[entityName];
         }
 
         public int SaveChanges()
