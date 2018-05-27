@@ -1,4 +1,5 @@
 ﻿using CoreCommon;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +23,6 @@ namespace CoreAccess.EntityFramework
         void Delete(TEntity entity);
         IQueryable<TEntity> Query();
         IQueryable<TEntity> SelectQuery(string query, params object[] values);
+        IDbContextTransaction StartTransaction();
     }
 }

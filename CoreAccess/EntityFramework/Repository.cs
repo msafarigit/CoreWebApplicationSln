@@ -1,4 +1,5 @@
 ﻿using CoreCommon;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,107 +12,126 @@ namespace CoreAccess.EntityFramework
     //class Repository<TEntity> is Bridge for UnitOfWork Abstraction
     public class Repository<TEntity> : IRepositoryAsync<TEntity>, IRepository<TEntity> where TEntity : class, IEntity
     {
-        public int Count()
+        protected readonly IEntityContextAsync _context;
+        //protected readonly DbSet _context;
+
+        public Repository(IEntityContextAsync context)
+        {
+            _context = context;
+        }
+
+        public virtual int Count()
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> CountAsync()
+        public virtual Task<int> CountAsync()
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(object identifier)
+        public virtual void Delete(object identifier)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(object identifier)
+        public virtual Task DeleteAsync(object identifier)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(TEntity entity)
+        public virtual Task DeleteAsync(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
-        public ICollection<TEntity> FindAll(Expression<Func<TEntity, bool>> match)
+        public virtual ICollection<TEntity> FindAll(Expression<Func<TEntity, bool>> match)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> match)
+        public virtual Task<ICollection<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> match)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+        public virtual IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual Task<ICollection<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public TEntity FindEntity(params object[] values)
+        public virtual TEntity FindEntity(params object[] values)
         {
             throw new NotImplementedException();
         }
 
-        public Task<TEntity> FindEntityAsync(params object[] values)
+        public virtual Task<TEntity> FindEntityAsync(params object[] values)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
+        {
+            //AsNoTracking: Memory Usage, Application Speed, Committed All on Save Changes
+            throw new NotImplementedException();
+        }
+
+        public virtual object Insert(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
-        public object Insert(TEntity entity)
+        public virtual object Insert(IEnumerable<TEntity> entity)
         {
             throw new NotImplementedException();
         }
 
-        public object Insert(IEnumerable<TEntity> entity)
+        public virtual Task<object> InsertAsync(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<object> InsertAsync(TEntity entity)
+        public virtual Task<object> InsertAsync(IEnumerable<TEntity> entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<object> InsertAsync(IEnumerable<TEntity> entity)
+        public virtual IQueryable<TEntity> Query()
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<TEntity> Query()
+        public virtual IQueryable<TEntity> SelectQuery(string query, params object[] values)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<TEntity> SelectQuery(string query, params object[] values)
+        public virtual IDbContextTransaction StartTransaction()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(TEntity entity)
+        public virtual Task<IDbContextTransaction> StartTransactionAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(TEntity entity)
+        public virtual void Update(TEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Task UpdateAsync(TEntity entity)
         {
             throw new NotImplementedException();
         }

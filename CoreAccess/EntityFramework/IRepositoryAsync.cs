@@ -1,4 +1,5 @@
 ﻿using CoreCommon;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,6 @@ namespace CoreAccess.EntityFramework
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(object identifier);
         Task DeleteAsync(TEntity entity);
+        Task<IDbContextTransaction> StartTransactionAsync();
     }
 }
