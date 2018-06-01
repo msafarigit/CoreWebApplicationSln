@@ -1,4 +1,5 @@
 ﻿using CoreCommon;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,10 @@ namespace CoreAccess.EntityFramework
     //class Repository<TEntity> is Bridge for UnitOfWork Abstraction
     public class Repository<TEntity> : IRepositoryAsync<TEntity>, IRepository<TEntity> where TEntity : class, IEntity
     {
-        protected readonly IEntityContextAsync _context;
-        //protected readonly DbSet _context;
+        protected readonly EntityContext _context;
+        protected readonly DbSet<TEntity> _entitySet;
 
-        public Repository(IEntityContextAsync context)
+        public Repository(EntityContext context)
         {
             _context = context;
         }
@@ -116,16 +117,6 @@ namespace CoreAccess.EntityFramework
             throw new NotImplementedException();
         }
 
-        public virtual IDbContextTransaction StartTransaction()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Task<IDbContextTransaction> StartTransactionAsync()
-        {
-            throw new NotImplementedException();
-        }
-
         public virtual void Update(TEntity entity)
         {
             throw new NotImplementedException();
@@ -135,5 +126,16 @@ namespace CoreAccess.EntityFramework
         {
             throw new NotImplementedException();
         }
+
+        public virtual IDbContextTransaction StartTransaction()
+        {
+            return _context.Database.BeginTransaction();
+        }
+
+        public virtual Task<IDbContextTransaction> StartTransactionAsync()
+        {
+            return _context.Database.BeginTransactionAsync();
+        }
+
     }
 }
