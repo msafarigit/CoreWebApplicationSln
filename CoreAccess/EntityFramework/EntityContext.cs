@@ -17,6 +17,7 @@ namespace CoreAccess.EntityFramework
         private bool _disposed;
         private IConfigurationRoot _config;
 
+        //when use OnConfiguring, must be passed DbContextOptions instance to base.
         public EntityContext(DbContextOptions options) : base(options)
         {
         }
