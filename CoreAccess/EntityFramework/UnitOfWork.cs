@@ -65,6 +65,11 @@ namespace CoreAccess.EntityFramework
             return this._entityContext.SaveChanges();
         }
 
+        public int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            return this._entityContext.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
         public async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken)
         {
             return await this._entityContext.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);

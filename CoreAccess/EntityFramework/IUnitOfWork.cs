@@ -12,6 +12,7 @@ namespace CoreAccess.EntityFramework
         IEntityContextAsync EntityContext { get; }
         IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity;
         int SaveChanges();
+        int SaveChanges(bool acceptAllChangesOnSuccess);
         void Dispose(bool disposing);
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CoreAccess.EntityFramework
 {
-    public class EntityContext : DbContext, IEntityContextAsync, IEntityContext, IDisposable
+    public partial class EntityContext : DbContext, IEntityContextAsync, IEntityContext, IDisposable
     {
         private bool _disposed;
         private IConfigurationRoot _config;
@@ -62,6 +62,7 @@ namespace CoreAccess.EntityFramework
             return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
+        //override from DbContext
         public override void Dispose()
         {
             if (!this._disposed)
@@ -73,7 +74,7 @@ namespace CoreAccess.EntityFramework
                 }
                 this._disposed = true;
             }
-            base.Dispose();
+            base.Dispose();//base is DbContext!
         }
 
     }
